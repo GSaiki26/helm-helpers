@@ -44,4 +44,4 @@ jobs:
       - name: Publish Helm
         uses: actions/upload-pages-artifact@v4
         with:
-          path: helpers/*.tgz
+          path: helpers/
