@@ -1,0 +1,1 @@
+{{ include "gsaiki-helpers.service" .Values}}

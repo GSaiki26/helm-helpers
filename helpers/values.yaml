@@ -1,0 +1,9 @@
+name: test
+annotations:
+  key1: value1
+  key2: value2
+
+ports:
+  - port: 8080
+
+    portName: http
