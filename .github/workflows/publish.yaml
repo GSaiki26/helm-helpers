@@ -1,0 +1,47 @@
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  getVersion:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install yq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y yq
+
+      - name: Get version from Chart.yaml
+        id: get_version
+        run: |
+          VERSION=$(yq ".version" helpers/Chart.yaml)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  publish:
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+
+    needs: getVersion
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install helm
+        uses: azure/setup-helm@v4.3.0
+
+      - name: Package Helm Chart
+        run: |
+          cd helpers
+          helm package .
+
+      - name: Publish Helm
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: helpers/*.tgz
