@@ -16,6 +16,41 @@ In order to avoid repeating the same properties all over again, these are common
 
 
 ## Kubernetes Native ☸️
+### Deployment - `gsaiki-helpers.deployment`
+| Name                                     | Type       | Description                                                        |
+| ---------------------------------------- | ---------- | ------------------------------------------------------------------ |
+| `replicas`                               | int        | Number of pod replicas. Default: `1`.                              |
+| `containers`                             | *list[map] | List of containers to run in the pod.                              |
+| `containers[*].name`                     | *string    | Container name.                                                    |
+| `containers[*].image`                    | *map       | Container image configuration.                                     |
+| `containers[*].image.name`               | *string    | Image name (e.g. `nginx`).                                         |
+| `containers[*].image.tag`                | *string    | Image tag (e.g. `latest`).                                         |
+| `containers[*].image.pullPolicy`         | *string    | Image pull policy. Default: `IfNotPresent`.                        |
+| `containers[*].cpu`                      | map        | CPU resource configuration.                                        |
+| `containers[*].cpu.requests`             | string     | Requested CPU. Default: `50m`.                                     |
+| `containers[*].cpu.limits`               | string     | CPU limit. Default: `50m`.                                         |
+| `containers[*].memory`                   | map        | Memory resource configuration.                                     |
+| `containers[*].memory.requests`          | string     | Requested memory. Default: `128Mi`.                                |
+| `containers[*].memory.limits`            | string     | Memory limit. Default: `128Mi`.                                    |
+| `containers[*].env`                      | list[map]  | Environment variables for the container.                           |
+| `containers[*].env[*].name`              | *string    | Environment variable name.                                         |
+| `containers[*].env[*].value`             | string     | Environment variable value.                                        |
+| `containers[*].env[*].type`              | string     | Source type for the env value (e.g. `secretRef`, `configMapRef`).  |
+| `containers[*].ports`                    | list[map]  | Container ports to expose.                                         |
+| `containers[*].ports[*].port`            | *int       | Container port number.                                             |
+| `containers[*].ports[*].name`            | string     | Port name.                                                         |
+| `containers[*].ports[*].protocol`        | string     | Network protocol. Default: `TCP`.                                  |
+| `containers[*].volumes`                  | list[map]  | Volumes mounted into the container.                                |
+| `containers[*].volumes[*].name`          | *string    | Volume name.                                                       |
+| `containers[*].volumes[*].type`          | *string    | Volume type (e.g. `persistentVolumeClaim`, `configMap`, `secret`). |
+| `containers[*].volumes[*].items`         | list[map]  | Key-to-path mappings (only for `configMap` volumes).               |
+| `containers[*].volumes[*].items[*].key`  | string     | ConfigMap key.                                                     |
+| `containers[*].volumes[*].items[*].path` | string     | File path inside the volume.                                       |
+| `containers[*].volumes[*].mountPath`     | *string    | Mount path inside the container.                                   |
+| `containers[*].volumes[*].subPath`       | string     | Sub-path within the volume to mount.                               |
+| `containers[*].volumes[*].readOnly`      | bool       | Whether the volume is read-only. Default: `false`.                 |
+
+
 ### HTTPRoute - `gsaiki-helpers.httpRoute`
 | Name                            | Type          | Description                                             |
 | ------------------------------- | ------------- | ------------------------------------------------------- |
@@ -33,12 +68,12 @@ In order to avoid repeating the same properties all over again, these are common
 | `rules[*].backendRefs[*].port`  | *string       | Port of the backend Service.                            |
 
 
-### Persistant Volume Claim - `gsaiki-helpers.pvc`
+### Persistent Volume Claim - `gsaiki-helpers.pvc`
 | Name                | Type         | Description                                               |
 | ------------------- | ------------ | --------------------------------------------------------- |
 | `storage`           | *map         | Storage configuration for the PersistentVolumeClaim.      |
 | `storage.requests`  | *string      | Requested storage size (e.g. `10Gi`).                     |
-| `storageClass`      | map[string]  | StorageClass configuration for the volume.                |
+| `storageClass`      | map          | StorageClass configuration for the volume.                |
 | `storageClass.name` | string       | Name of the StorageClass to use.                          |
 | `volumeMode`        | string       | Volume mode for the PVC. Defaults to `Filesystem`.        |
 | `accessModes`       | list[string] | Access modes for the PVC. Defaults to `["ReadWriteOnce"]` |
