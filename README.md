@@ -23,6 +23,14 @@ The following values are **shared by all helpers** and can be used in **any** re
 
 ## Kubernetes Native ☸️
 
+### ConfigMap — `gsaiki-helpers.configMap`
+
+| Name   | Type               | Description                                                                                                                   |
+| ------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| `data` | map[string,string] | Key-value pairs stored in the ConfigMap. Each key is created as a file or environment entry, depending on how it is consumed. |
+
+---
+
 ### Deployment — `gsaiki-helpers.deployment`
 
 | Name                                     | Type       | Description                                                   |
