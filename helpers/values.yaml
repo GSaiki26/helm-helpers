@@ -1,9 +1,34 @@
-name: test
-annotations:
-  key1: value1
-  key2: value2
+service:
+  name: test
+  annotations:
+    key1: value1
+    key2: value2
 
-ports:
-  - port: 8080
+  ports:
+    - port: 8080
 
-    portName: http
+      portName: http
+
+route:
+  name: route
+  annotations:
+    key1: value1
+    key2: value2
+
+  labels:
+    thisALabel: "true"
+
+  gateways:
+    - name: traefik-gateway
+      namespace: traefik
+
+  hostnames: [localhost]
+
+  rules:
+    - matches:
+        - matchType: path
+          type: PathPrefix
+          value: /
+      backendRefs:
+        - name: "test-server"
+          port: 80

@@ -1,1 +1,2 @@
 {{ include "gsaiki-helpers.service" .Values}}
+{{ include "gsaiki-helpers.httpRoute" .Values.route}}
