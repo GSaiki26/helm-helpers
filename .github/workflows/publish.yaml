@@ -9,7 +9,6 @@ env:
 
 jobs:
   publish:
-    needs: getVersion
     runs-on: ubuntu-latest
 
     permissions:
