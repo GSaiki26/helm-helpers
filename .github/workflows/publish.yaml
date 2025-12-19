@@ -1,46 +1,13 @@
 on:
   push:
-    branches: ["main"]
+    tags:
+      - "*"
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  getVersion:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.get_version.outputs.version }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Install yq
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y yq
-
-      - name: Get version from Chart.yaml
-        id: get_version
-        run: |
-          VERSION=$(yq -r ".version" helpers/Chart.yaml)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-  tag-and-release:
-    needs: getVersion
-    runs-on: ubuntu-latest
-
-    env:
-      VERSION: ${{ needs.getVersion.outputs.version }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Create tag
-        run: |
-          git tag $VERSION && git push --tags
-
   publish:
     needs: getVersion
     runs-on: ubuntu-latest
