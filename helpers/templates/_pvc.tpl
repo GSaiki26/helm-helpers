@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "{{ .name }}{{ .nameSuffix | default "-pvc"}}"
+  name: {{ .name }}{{ .nameSuffix | default "-pvc" }}
   labels:
-    app.kubernetes.io/name: "{{ .name }}"
+    app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}
-    app.kubernetes.io/instance: "{{ . }}"
+    app.kubernetes.io/instance: {{ . }}
     {{- end }}
     {{- with .component }}
-    app.kubernetes.io/component: "{{ . }}"
+    app.kubernetes.io/component: {{ . }}
     {{- end }}
     {{- with .labels }}
     {{- toYaml . | nindent 4 }}
@@ -24,11 +24,11 @@ spec:
   storageClassName: "{{- . }}"
   {{- end }}
   {{- end }}
-  volumeMode: "{{ .volumeMode | default "Filesystem" }}"
+  volumeMode: {{ .volumeMode | default "Filesystem" }}
   accessModes:
   {{- toYaml (.accessModes | default (list "ReadWriteOnce")) | nindent 4 }}
 
   resources:
     requests:
-      storage: "{{ .storage.requests }}"
+      storage: {{ .storage.requests }}
 {{- end -}}

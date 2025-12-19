@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ .name }}{{ .nameSuffix | default "-svc"}}"
+  name: {{ .name }}{{ .nameSuffix | default "-svc" }}
   labels:
-    app.kubernetes.io/name: "{{ .name }}"
+    app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}
-    app.kubernetes.io/instance: "{{ . }}"
+    app.kubernetes.io/instance: {{ . }}
     {{- end }}
     {{- with .component }}
-    app.kubernetes.io/component: "{{ . }}"
+    app.kubernetes.io/component: {{ . }}
     {{- end }}
     {{- with .labels }}
     {{- toYaml . | nindent 4 }}
@@ -20,27 +20,27 @@ metadata:
   {{- end }}
 spec:
   selector:
-    app.kubernetes.io/name: "{{ .name }}"
+    app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}
-    app.kubernetes.io/instance: "{{ . }}"
+    app.kubernetes.io/instance: {{ . }}
     {{- end }}
     {{- with .component }}
-    app.kubernetes.io/component: "{{ . }}"
+    app.kubernetes.io/component: {{ . }}
     {{- end }}
     {{- with .labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  type: "{{ .type | default "ClusterIP" }}"
+  type: {{ .type | default "ClusterIP" }}
   ports:
     {{- range .ports }}
-    - port: "{{ .port }}"
-      targetPort: "{{ .targetPort | default .port }}"
+    - port: {{ .port }}
+      targetPort: {{ .targetPort | default .port }}
       {{- with .nodePort }}
-      nodePort: "{{ . }}"
+      nodePort: {{ . }}
       {{- end }}
       {{- with .portName }}
       name: "{{ . }}"
       {{- end }}
-      protocol: "{{ .protocol | default "TCP" }}"
+      protocol: {{ .protocol | default "TCP" }}
     {{- end }}
 {{- end -}}

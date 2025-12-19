@@ -59,3 +59,42 @@ es:
     dataFrom:
       - extract:
           key: test/user
+
+deployment:
+  name: test
+  annotations:
+    key1: value1
+
+  labels:
+    thisALabel: "true"
+
+  containers:
+    - name: optionalName
+      image:
+        name: nginx
+        tag: latest
+      # cpu:
+      #   limits: "50m"
+      #   requests: "50m"
+      # memory:
+      #   limits: "128Mi"
+      #   requests: "128Mi"
+
+      ports:
+        - name: http
+          port: 80
+          protocol: UDP
+
+      volumes:
+        - name: nginx-config
+          type: configMap
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+
+      env:
+        - name: TZ
+          value: America/Sao_Paulo
+
+        - name: TZ2
+          type: secretRef
