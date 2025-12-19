@@ -1,2 +1,3 @@
-{{ include "gsaiki-helpers.service" .Values}}
-{{ include "gsaiki-helpers.httpRoute" .Values.route}}
+{{ include "gsaiki-helpers.service" .Values.service }}
+{{ include "gsaiki-helpers.httpRoute" .Values.route }}
+{{ include "gsaiki-helpers.pvc" .Values.pvc }}

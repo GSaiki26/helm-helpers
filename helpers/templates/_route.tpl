@@ -4,12 +4,12 @@ kind: HTTPRoute
 metadata:
   name: {{ .name }}{{ .nameSuffix | default "-route"}}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: "{{ .name }}"
     {{- with .instance }}
-    app.kubernetes.io/instance: {{ . }}
+    app.kubernetes.io/instance: "{{ . }}"
     {{- end }}
     {{- with .component }}
-    app.kubernetes.io/component: {{ . }}
+    app.kubernetes.io/component: "{{ . }}"
     {{- end }}
     {{- with .labels }}
     {{- toYaml . | nindent 4 }}

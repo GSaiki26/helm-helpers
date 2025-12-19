@@ -32,3 +32,14 @@ route:
       backendRefs:
         - name: "test-server"
           port: 80
+
+pvc:
+  name: test
+  annotations:
+    key1: value1
+
+  labels:
+    thisALabel: "true"
+
+  storage:
+    requests: 4096Mi

@@ -4,12 +4,12 @@ kind: Service
 metadata:
   name: {{ .name }}{{ .nameSuffix | default "-svc"}}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: "{{ .name }}"
     {{- with .instance }}
-    app.kubernetes.io/instance: {{ . }}
+    app.kubernetes.io/instance: "{{ . }}"
     {{- end }}
     {{- with .component }}
-    app.kubernetes.io/component: {{ . }}
+    app.kubernetes.io/component: "{{ . }}"
     {{- end }}
     {{- with .labels }}
     {{- toYaml . | nindent 4 }}
@@ -20,12 +20,12 @@ metadata:
   {{- end }}
 spec:
   selector:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: "{{ .name }}"
     {{- with .instance }}
-    app.kubernetes.io/instance: {{ . }}
+    app.kubernetes.io/instance: "{{ . }}"
     {{- end }}
     {{- with .component }}
-    app.kubernetes.io/component: {{ . }}
+    app.kubernetes.io/component: "{{ . }}"
     {{- end }}
     {{- with .labels }}
     {{- toYaml . | nindent 4 }}
@@ -36,10 +36,10 @@ spec:
     - port: {{ .port }}
       targetPort: {{ .targetPort | default .port }}
       {{- with .nodePort }}
-      nodePort: {{ . }}
+      nodePort: "{{ . }}"
       {{- end }}
       {{- with .portName }}
-      name: {{ . }}
+      name: "{{ . }}"
       {{- end }}
       protocol: {{ .protocol | default "TCP" }}
     {{- end }}
