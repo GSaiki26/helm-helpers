@@ -76,6 +76,9 @@ spec:
       - name: {{ if hasKey . "name" }}{{ .name }}{{ else }}{{ $root.name }}{{ end }}
         image: "{{ .image.name }}:{{ .image.tag }}"
         imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+        {{- with .command }}
+        command: {{ .command }}
+        {{- end }}
         resources:
           requests:
             cpu: {{ dig "cpu" "requests" "50m" . }}
