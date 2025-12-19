@@ -43,3 +43,19 @@ pvc:
 
   storage:
     requests: 4096Mi
+
+es:
+  name: test
+  annotations:
+    key1: value1
+
+  labels:
+    thisALabel: "true"
+
+  secretStore:
+    name: vault-backend
+
+  references:
+    dataFrom:
+      - extract:
+          key: test/user

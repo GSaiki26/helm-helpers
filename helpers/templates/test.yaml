@@ -1,3 +1,4 @@
 {{ include "gsaiki-helpers.service" .Values.service }}
 {{ include "gsaiki-helpers.httpRoute" .Values.route }}
 {{ include "gsaiki-helpers.pvc" .Values.pvc }}
+{{ include "gsaiki-helpers.externalSecret" .Values.es }}
