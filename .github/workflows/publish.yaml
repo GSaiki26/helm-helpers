@@ -5,7 +5,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  REPO_OWNER: ${{ github.repository_owner }}
 
 jobs:
   publish:
@@ -37,4 +37,4 @@ jobs:
       - name: Publish Helm
         run: |
           cd helpers
-          helm push $PKG oci://$REGISTRY/$IMAGE_NAME
+          helm push $PKG oci://$REGISTRY/$REPO_OWNER
