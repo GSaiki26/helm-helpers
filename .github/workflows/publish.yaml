@@ -36,4 +36,5 @@ jobs:
 
       - name: Publish Helm
         run: |
+          cd helpers
           helm push $PKG oci://$REGISTRY/$IMAGE_NAME
