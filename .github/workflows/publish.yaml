@@ -66,8 +66,8 @@ jobs:
 
       - name: Log in into Helm
         run: |
-          helm registry login ${{ env.REGISTRY }} -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+          helm registry login $REGISTRY -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Helm
         run: |
-          helm push $PKG oci://$IMAGE_NAME
+          helm push $PKG oci://$REGISTRY/$IMAGE_NAME
