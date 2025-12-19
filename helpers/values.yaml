@@ -98,3 +98,11 @@ deployment:
 
         - name: TZ2
           type: secretRef
+
+cfg:
+  name: test
+  data:
+    TZ: America/Sao_Paulo
+    RANDOM_ID: yes
+    file: |
+      {"foo": "bar"}
