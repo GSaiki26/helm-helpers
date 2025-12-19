@@ -66,4 +66,4 @@ jobs:
 
       - name: Publish Helm
         run: |
-          helm push *.tgz oci://${{ IMAGE_NAME }}
+          helm push *.tgz oci://$IMAGE_NAME
