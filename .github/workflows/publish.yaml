@@ -2,6 +2,10 @@ on:
   push:
     branches: ["main"]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   getVersion:
     runs-on: ubuntu-latest
@@ -19,16 +23,31 @@ jobs:
       - name: Get version from Chart.yaml
         id: get_version
         run: |
-          VERSION=$(yq ".version" helpers/Chart.yaml)
+          VERSION=$(yq -r ".version" helpers/Chart.yaml)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-  publish:
-    environment:
-      name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
-
+  tag-and-release:
     needs: getVersion
     runs-on: ubuntu-latest
+
+    env:
+      VERSION: ${{ needs.getVersion.outputs.version }}
+
+    steps:
+      - name: Create tag
+        run: |
+          git tag $VERSION && git push --tags
+
+  publish:
+    needs: getVersion
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -41,7 +60,10 @@ jobs:
           cd helpers
           helm package .
 
+      - name: Log in into Helm
+        run: |
+          helm registry login ${{ env.REGISTRY }} -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish Helm
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: helpers/
+        run: |
+          helm push *.tgz oci://${{ IMAGE_NAME }}
