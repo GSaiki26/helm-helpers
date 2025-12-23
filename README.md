@@ -78,11 +78,11 @@ The following values are **shared by all helpers** and can be used in **any** re
 | `httpGet.path`        | string       | HTTP path to probe.                                  |
 | `httpGet.port`        | int          | Port to access for the HTTP probe.                   |
 | `command`             | list[string] | Command executed inside the container (exec probe).  |
-| `periodSeconds`       | int          | Probe interval. Default: `30`.                       |
-| `timeoutSeconds`      | int          | Probe timeout. Default: `10`.                        |
-| `initialDelaySeconds` | int          | Initial delay before the first probe. Default: `10`. |
-| `failureThreshold`    | int          | Failure threshold. Default: `3`.                     |
-| `successThreshold`    | int          | Success threshold. Default: `3`.                     |
+| `periodSeconds`       | int          | Probe interval. Default: `60`.                       |
+| `timeoutSeconds`      | int          | Probe timeout. Default: `60`.                        |
+| `initialDelaySeconds` | int          | Initial delay before the first probe. Default: `60`. |
+| `failureThreshold`    | int          | Failure threshold. Default: `1`.                     |
+| `successThreshold`    | int          | Success threshold. Default: `1`.                     |
 
 
 ---
