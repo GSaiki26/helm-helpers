@@ -1,5 +1,5 @@
 {{- define "gsaiki-helpers.service" }}
-{{ $root := . }}
+{{- $root := . }}
 apiVersion: v1
 kind: Service
 metadata:

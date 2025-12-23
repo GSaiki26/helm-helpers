@@ -1,5 +1,5 @@
 {{- define "gsaiki-helpers.pvc" }}
-{{ $root := . }}
+{{- $root := . }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

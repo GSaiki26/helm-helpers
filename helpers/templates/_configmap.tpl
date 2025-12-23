@@ -1,5 +1,5 @@
 {{- define "gsaiki-helpers.configMap" }}
-{{ $root := . }}
+{{- $root := . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

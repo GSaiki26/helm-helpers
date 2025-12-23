@@ -1,5 +1,5 @@
 {{- define "gsaiki-helpers.httpRoute" }}
-{{ $root := . }}
+{{- $root := . }}
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:

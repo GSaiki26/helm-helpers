@@ -73,6 +73,27 @@ deployment:
       image:
         name: nginx
         tag: latest
+
+      probes:
+        startup:
+          httpGet:
+            path: /
+            port: 8080
+
+        readiness:
+          command: ["pg_isready", "-d", "db_prod"]
+          periodSeconds: 30
+          timeoutSeconds: 10
+          initialDelaySeconds: 10
+
+          failureThreshold: 3
+          successThreshold: 3
+
+        liveness:
+          httpGet:
+            path: /
+            port: 8080
+
       # cpu:
       #   limits: "50m"
       #   requests: "50m"

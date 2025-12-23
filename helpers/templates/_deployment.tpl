@@ -1,5 +1,50 @@
+{{- define "gsaiki-helpers.deploymentProbe" }}
+{{- $root := . }}
+{{- .type }}Probe:
+  {{- with .command }}
+  exec:
+    command:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .httpGet }}
+  httpGet:
+    {{- with .host }}
+    host: {{ . | quote }}
+    {{- end }}
+    {{- with .httpHeaders }}
+    httpHeaders:
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .path }}
+    path: {{ . | quote }}
+    {{- end }}
+    {{- with .port }}
+    port: {{ . | quote }}
+    {{- end }}
+    scheme: {{ .scheme | default "HTTP"}}
+  {{- end }}
+  {{- with .tcpSocket }}
+  tcpSocket:
+    {{- with .host }}
+    host: {{ . | quote }}
+    {{- end }}
+    {{- with .port }}
+    port: {{ . | quote }}
+    {{- end }}
+  {{- end }}
+
+  periodSeconds: {{ .periodSeconds | default 60 }}
+  timeoutSeconds: {{ .timeoutSeconds | default 60 }}
+  initialDelaySeconds: {{ .initialDelaySeconds | default 60 }}
+
+  failureThreshold: {{ .failureThreshold | default 1 }}
+  successThreshold: {{ .successThreshold | default 1 }}
+
+{{- end }}
+
+
 {{- define "gsaiki-helpers.deployment" }}
-{{ $root := . }}
+{{- $root := . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -82,6 +127,11 @@ spec:
         - {{ . | quote }}
           {{- end }}
         {{- end }}
+
+        {{- range $probeType, $value := .probes }}
+          {{- include "gsaiki-helpers.deploymentProbe" (merge (dict "type" $probeType ) $value) | nindent 8 }}
+        {{- end }}
+
         resources:
           requests:
             cpu: {{ dig "cpu" "requests" "50m" . }}

@@ -1,5 +1,5 @@
 {{- define "gsaiki-helpers.externalSecret" }}
-{{ $root := . }}
+{{- $root := . }}
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
