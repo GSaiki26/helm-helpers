@@ -78,7 +78,9 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
         {{- with .command }}
         command:
-          {{ toYaml . | nindent 8 }}
+          {{- range . }}
+        - {{ . | quote }}
+          {{- end }}
         {{- end }}
         resources:
           requests:
