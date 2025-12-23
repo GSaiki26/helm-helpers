@@ -63,7 +63,7 @@ spec:
           {{- else if eq .type "configMap" }}
           name: {{ .name | default $root.name }}{{ .nameSuffix }}
           {{- if hasKey . "items" }}
-          {{- toYaml .items | nindent 8}}
+          {{- toYaml .items | nindent 8 }}
           {{- end }}
           {{- else if eq .type "secret" }}
           secretName: {{ .name | default $root.name }}{{ .nameSuffix }}
@@ -77,7 +77,8 @@ spec:
         image: "{{ .image.name }}:{{ .image.tag }}"
         imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
         {{- with .command }}
-        command: {{ .command }}
+        command:
+          {{ toYaml . | nindent 8 }}
         {{- end }}
         resources:
           requests:
