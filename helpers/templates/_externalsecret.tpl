@@ -27,7 +27,7 @@ spec:
     kind: {{ .secretStore.kind | default "ClusterSecretStore" }}
   target:
     name: {{ .name | default $root.name }}{{ .nameSuffix }}
-    {{- .with .templateType }}
+    {{- with .templateType }}
     template:
       type: {{ . }}
     {{- end }}
