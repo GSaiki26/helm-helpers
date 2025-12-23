@@ -1,10 +1,11 @@
 {{- define "gsaiki-helpers.configMap" }}
+{{ $root := . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .name }}{{ .nameSuffix }}
+  name: {{ .name | default $root.name }}{{ .nameSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
     {{- with .instance }}
     app.kubernetes.io/instance: {{ . }}
     {{- end }}

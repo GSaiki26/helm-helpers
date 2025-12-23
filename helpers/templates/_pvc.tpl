@@ -1,10 +1,11 @@
 {{- define "gsaiki-helpers.pvc" }}
+{{ $root := . }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .name }}{{ .nameSuffix }}
+  name: {{ .name | default $root.name }}{{ .nameSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
     {{- with .instance }}
     app.kubernetes.io/instance: {{ . }}
     {{- end }}
@@ -19,10 +20,9 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- with .storageClass }}
-  {{- with .name }}
-  storageClassName: "{{- . }}"
-  {{- end }}
+  {{- $sc := dig "storageClass" "name" "" . }}
+  {{- if $sc }}
+  storageClassName: {{- $sc }}
   {{- end }}
   volumeMode: {{ .volumeMode | default "Filesystem" }}
   accessModes:

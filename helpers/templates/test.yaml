@@ -1,1 +1,1 @@
-{{ include "gsaiki-helpers.configMap" .Values.cfg }}
+{{ include "gsaiki-helpers.deployment" .Values.deployment }}

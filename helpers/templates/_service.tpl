@@ -1,10 +1,11 @@
 {{- define "gsaiki-helpers.service" }}
+{{ $root := . }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .name }}{{ .nameSuffix }}
+  name: {{ .name | default $root.name }}{{ .nameSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
     {{- with .instance }}
     app.kubernetes.io/instance: {{ . }}
     {{- end }}
@@ -20,7 +21,7 @@ metadata:
   {{- end }}
 spec:
   selector:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
     {{- with .instance }}
     app.kubernetes.io/instance: {{ . }}
     {{- end }}

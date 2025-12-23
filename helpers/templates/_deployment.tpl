@@ -3,9 +3,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .name }}{{ .nameSuffix }}
+  name: {{ .name | default $root.name }}{{ .nameSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
     {{- with .instance }}
     app.kubernetes.io/instance: {{ . }}
     {{- end }}
@@ -24,7 +24,7 @@ spec:
 
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ .name }}
+      app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
       {{- with .instance }}
       app.kubernetes.io/instance: {{ . }}
       {{- end }}
@@ -37,7 +37,7 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ .name }}
+        app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
         {{- with .instance }}
         app.kubernetes.io/instance: {{ . }}
         {{- end }}
@@ -56,24 +56,24 @@ spec:
       {{- with $volumes }}
       volumes:
       {{- range . }}
-      - name: {{ .name }}
+      - name: {{ .name | default $root.name }}{{ .nameSuffix }}
         {{ .type }}:
           {{- if eq .type "persistentVolumeClaim" }}
-          claimName: {{ .name }}
+          claimName: {{ .name | default $root.name }}{{ .nameSuffix }}
           {{- else if eq .type "configMap" }}
-          name: {{ .name }}
+          name: {{ .name | default $root.name }}{{ .nameSuffix }}
           {{- if hasKey . "items" }}
           {{- toYaml .items | nindent 8}}
           {{- end }}
           {{- else if eq .type "secret" }}
-          secretName: {{ .name }}
+          secretName: {{ .name | default $root.name }}{{ .nameSuffix }}
           {{- end }}
       {{- end }}
       {{- end }}
 
       containers:
       {{- range .containers }}
-      - name: {{ if hasKey . "name" }}{{ .name }}{{ else }}{{ $root.name }}{{ end }}
+      - name: {{ .name | default $root.name }}{{ .nameSuffix }}
         image: "{{ .image.name }}:{{ .image.tag }}"
         imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
         {{- with .command }}
@@ -101,7 +101,7 @@ spec:
         {{- with .volumes }}
         volumeMounts:
         {{- range . }}
-        - name: {{ .name }}
+        - name: {{ .name | default $root.name }}{{ .nameSuffix }}
           mountPath: {{ .mountPath }}
           {{- with .subPath }}
           subPath: {{ . }}
@@ -123,7 +123,7 @@ spec:
         {{- with $envWithValue }}
         env:
         {{- range .  }}
-        - name: {{ .name }}
+        - name: {{ .name | default $root.name }}{{ .nameSuffix }}
           value: {{ .value }}
         {{- end }}
         {{- end }}
@@ -132,7 +132,7 @@ spec:
         envFrom:
         {{- range .  }}
         - {{ .type }}:
-            name: {{ .name }}
+            name: {{ .name | default $root.name }}{{ .nameSuffix }}
         {{- end }}
         {{- end }}
 

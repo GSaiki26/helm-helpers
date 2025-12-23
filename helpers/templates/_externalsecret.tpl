@@ -1,10 +1,11 @@
 {{- define "gsaiki-helpers.externalSecret" }}
+{{ $root := . }}
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: {{ .name }}{{ .nameSuffix }}
+  name: {{ .name | default $root.name }}{{ .nameSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
     {{- with .instance }}
     app.kubernetes.io/instance: {{ . }}
     {{- end }}
@@ -25,7 +26,7 @@ spec:
     name: {{ .secretStore.name }}
     kind: {{ .secretStore.kind | default "ClusterSecretStore" }}
   target:
-    name: {{ .name }}{{ .nameSuffix }}
+    name: {{ .name | default $root.name }}{{ .nameSuffix }}
   {{- range $key, $value := .references }}
   {{ $key }}:
     {{- toYaml $value | nindent 4 }}

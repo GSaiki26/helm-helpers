@@ -1,10 +1,11 @@
 {{- define "gsaiki-helpers.httpRoute" }}
+{{ $root := . }}
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: {{ .name }}{{ .nameSuffix }}
+  name: {{ .name | default $root.name }}{{ .nameSuffix }}
   labels:
-    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/name: {{ .name | default $root.name }}{{ .nameSuffix }}
     {{- with .instance }}
     app.kubernetes.io/instance: {{ . }}
     {{- end }}
@@ -35,7 +36,7 @@ spec:
 
       backendRefs:
       {{- range .backendRefs }}
-      - name: {{ .name }}
+      - name: {{ .name | default $root.name }}{{ .nameSuffix }}
         port: {{ .port }}
       {{- end }}
 
