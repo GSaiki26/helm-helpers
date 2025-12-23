@@ -27,6 +27,10 @@ spec:
     kind: {{ .secretStore.kind | default "ClusterSecretStore" }}
   target:
     name: {{ .name | default $root.name }}{{ .nameSuffix }}
+    {{- .with .templateType }}
+    template:
+      type: {{ . }}
+    {{- end }}
   {{- range $key, $value := .references }}
   {{ $key }}:
     {{- toYaml $value | nindent 4 }}
