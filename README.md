@@ -10,14 +10,14 @@ It provides reusable helper templates that reduce duplication and enforce consis
 
 The following values are **shared by all helpers** and can be used in **any** resource:
 
-| Name          | Type               | Description                                                             |
-| ------------- | ------------------ | ----------------------------------------------------------------------- |
-| `name`        | *string            | Base name of the resource.                                              |
-| `nameSuffix`  | string             | Suffix appended to the resource name. Defaults to the resource acronym. |
-| `instance`    | string             | Value for the `app.kubernetes.io/instance` label.                       |
-| `component`   | string             | Value for the `app.kubernetes.io/component` label.                      |
-| `labels`      | map[string,string] | Additional labels applied to the resource.                              |
-| `annotations` | map[string,string] | Annotations applied to the resource.                                    |
+| Name          | Type               | Description                                                                   |
+| ------------- | ------------------ | ----------------------------------------------------------------------------- |
+| `name`        | *string            | Base name of the resource. Defaults to the release name.                      |
+| `nameSuffix`  | string             | Suffix appended to the resource name. Use this for distinguish the resources. |
+| `instance`    | string             | Value for the `app.kubernetes.io/instance` label.                             |
+| `component`   | string             | Value for the `app.kubernetes.io/component` label.                            |
+| `labels`      | map[string,string] | Additional labels applied to the resource.                                    |
+| `annotations` | map[string,string] | Annotations applied to the resource.                                          |
 
 ---
 
