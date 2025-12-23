@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .name }}{{ .nameSuffix | default "-cfg" }}
+  name: {{ .name }}{{ .nameSuffix }}
   labels:
     app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}

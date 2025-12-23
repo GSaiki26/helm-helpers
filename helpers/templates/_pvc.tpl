@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .name }}{{ .nameSuffix | default "-pvc" }}
+  name: {{ .name }}{{ .nameSuffix }}
   labels:
     app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}

@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .name }}{{ .nameSuffix | default "-dpl" }}
+  name: {{ .name }}{{ .nameSuffix }}
   labels:
     app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}

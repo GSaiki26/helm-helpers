@@ -125,4 +125,4 @@ The following values are **shared by all helpers** and can be used in **any** re
 | `secretStore.kind` | string             | Store kind. Default: `ClusterSecretStore`.                      |
 | `references`       | map[string,object] | Raw ExternalSecret fields merged directly (`data`, `dataFrom`). |
 
-> [!NOTE] The generated Kubernetes Secret uses the resource `name`, without applying `namePrefix`.
+> [!NOTE] The generated Kubernetes Secret uses the same resource name as the `ExternalSecret`.

@@ -2,7 +2,7 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: {{ .name }}{{ .nameSuffix | default "-es" }}
+  name: {{ .name }}{{ .nameSuffix }}
   labels:
     app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}
@@ -25,7 +25,7 @@ spec:
     name: {{ .secretStore.name }}
     kind: {{ .secretStore.kind | default "ClusterSecretStore" }}
   target:
-    name: {{ .name }}
+    name: {{ .name }}{{ .nameSuffix }}
   {{- range $key, $value := .references }}
   {{ $key }}:
     {{- toYaml $value | nindent 4 }}

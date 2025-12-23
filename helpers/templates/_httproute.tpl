@@ -2,7 +2,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: {{ .name }}{{ .nameSuffix | default "-route" }}
+  name: {{ .name }}{{ .nameSuffix }}
   labels:
     app.kubernetes.io/name: {{ .name }}
     {{- with .instance }}
